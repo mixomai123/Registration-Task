@@ -1,1 +1,10 @@
-<p>registration works!</p>
+<form [formGroup]="form">
+  <ng-container *ngFor="let field of formFields">
+    <label
+      >{{ field.label }}:
+      <input [type]="field.type" [formControlName]="field.name" />
+    </label>
+    <br />
+  </ng-container>
+  <button type="submit" (click)="onSubmit()">SUBMIT</button>
+</form>
