@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../registration.service';
-import { RegistrationField } from '../registration.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//TODO: refactor with more dynamic validations
+import { FieldValidation, RegistrationField } from '../registration.model';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+//TODO: refactor , move custom validator in separate file
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -20,30 +27,47 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.initFields(this.registrationService.getRegistrationFormFields());
   }
-
-  onSubmit() {
-    console.log(this.form.getRawValue());
-  }
   initFields(fields: RegistrationField[]) {
     this.formFields = fields;
     for (const field of fields) {
       const control = this.fb.control('');
-      if (field.required) {
-        control.addValidators(Validators.required);
-      }
-      for (const validation of field.validations || []) {
-        switch (validation.name) {
-          case 'minlength':
-            control.addValidators(
-              Validators.minLength(Number(validation.value))
-            );
-            break;
-          case 'regex':
-            control.addValidators(Validators.pattern(String(validation.value)));
-            break;
-        }
-      }
+      field?.validations
+        ?.reverse()
+        .map((validation) =>
+          control.addValidators(customValidator(validation))
+        );
       this.form.addControl(field.name, control);
     }
   }
+  getFirstError(obj: ValidationErrors | null): string {
+    return obj ? Object.values(obj)[0] : '';
+  }
+  onSubmit() {
+    if (this.form.valid) {
+      console.log(this.form.getRawValue());
+    }
+  }
+}
+export function customValidator(validator: FieldValidation): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    let hasDefaultError = false;
+    switch (validator.name) {
+      case 'regex':
+        hasDefaultError = !!Validators.pattern(String(validator.value))(
+          control
+        );
+        break;
+      case 'maxlength':
+        hasDefaultError = !!Validators.maxLength(Number(validator.value))(
+          control
+        );
+        break;
+      case 'minlength':
+        hasDefaultError = !!Validators.minLength(Number(validator.value))(
+          control
+        );
+        break;
+    }
+    return hasDefaultError ? { message: validator.message } : null;
+  };
 }

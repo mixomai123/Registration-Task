@@ -5,6 +5,16 @@
       <input [type]="field.type" [formControlName]="field.name" />
     </label>
     <br />
+    <div
+      *ngIf="
+        form.controls[field.name].invalid && form.controls[field.name].touched
+      "
+      class="alert"
+    >
+      <div *ngIf="form.controls[field.name].hasError">
+        {{ getFirstError(form.controls[field.name].errors) }}
+      </div>
+    </div>
   </ng-container>
   <button type="submit" (click)="onSubmit()">SUBMIT</button>
 </form>
