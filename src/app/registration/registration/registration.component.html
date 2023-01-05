@@ -1,1 +1,45 @@
-<p>registration works!</p>
+<div class="form-container">
+  <div class="header">
+    <h2>Registration</h2>
+  </div>
+  <form [formGroup]="form">
+    <ng-container *ngFor="let field of formFields">
+      <div class="form-control">
+        <label
+          >{{ field.label }}:
+          <input [type]="field.type" [formControlName]="field.name" #ref />
+
+          <ng-container *ngIf="field.type === 'password'">
+            <span>Show password</span>
+            <input
+              class="password-toggle"
+              type="checkbox"
+              #checkbox
+              (click)="ref.type = checkbox.checked ? 'text' : 'password'"
+            />
+          </ng-container>
+        </label>
+        <br />
+        <div
+          *ngIf="
+            form.controls[field.name].invalid &&
+            form.controls[field.name].touched
+          "
+          class="alert"
+        >
+          <div *ngIf="form.controls[field.name].hasError">
+            {{ getErrorMessage(form.controls[field.name].errors) }}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <button
+      class="submit-button"
+      type="submit"
+      (click)="onSubmit()"
+      [disabled]="form.invalid"
+    >
+      Create Account
+    </button>
+  </form>
+</div>

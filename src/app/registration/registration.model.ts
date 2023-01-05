@@ -1,5 +1,5 @@
 export interface FieldValidation {
-  name: string;
+  name: ValidatorName;
   message: string;
   value: string | number;
 }
@@ -12,4 +12,10 @@ export interface RegistrationField {
 }
 export interface RegistrationRequest {
   [fieldName: string]: string;
+}
+
+export enum ValidatorName {
+  minlength = 'minlength',
+  maxlength = 'maxlength',
+  regex = 'regex',
 }
