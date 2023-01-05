@@ -1,146 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  RegistrationField,
-  RegistrationRequest,
-  ValidatorName,
-} from './registration.model';
+import { RegistrationField, RegistrationRequest } from './registration.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 //TODO: -simulate real requests after mocking backend service, implement HTTPClient
 export class RegistrationService {
-  registrationFormFieldsResponseExample: RegistrationField[] = [
-    {
-      type: 'text',
-      name: 'first_name',
-      label: 'First Name',
-      required: true,
-      validations: [
-        {
-          name: ValidatorName.regex,
-          message: 'Only English characters are allowed.',
-          value: '^[a-zA-Z0-9]*$',
-        },
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 64 characters.',
-          value: 63,
-        },
-      ],
-    },
-    {
-      type: 'text',
-      name: 'middle_name',
-      label: 'Middle Name',
-      required: false,
-      validations: [
-        {
-          name: ValidatorName.regex,
-          message: 'Only English characters are allowed.',
-          value: '^[a-zA-Z0-9]*$',
-        },
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 64 characters.',
-          value: 63,
-        },
-      ],
-    },
-    {
-      type: 'text',
-      name: 'last_name',
-      label: 'Last Name',
-      required: true,
-      validations: [
-        {
-          name: ValidatorName.regex,
-          message: 'Only English characters are allowed.',
-          value: '^[a-zA-Z0-9]*$',
-        },
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 64 characters.',
-          value: 63,
-        },
-      ],
-    },
-    {
-      type: 'email',
-      name: 'email',
-      label: 'Email',
-      required: true,
-      validations: [
-        {
-          name: ValidatorName.regex,
-          message: 'Please provide correct email address.',
-          value: '^[a-z0-9]+@[a-z0-9]+\\.[a-z]{2,}$',
-        },
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 47 characters.',
-          value: 46,
-        },
-      ],
-    },
-    {
-      type: 'phone',
-      name: 'phone_number',
-      label: 'Mobile number',
-      required: true,
-      validations: [
-        {
-          name: ValidatorName.regex,
-          message: 'Only numbers are allowed.',
-          value: '^[0-9]+$',
-        },
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 47 characters.',
-          value: 10,
-        },
-        {
-          name: ValidatorName.minlength,
-          message: 'Must not be less than 4 characters.',
-          value: 4,
-        },
-      ],
-    },
-    {
-      type: 'password',
-      name: 'password',
-      label: 'Password',
-      required: true,
-      validations: [
-        {
-          name: ValidatorName.maxlength,
-          message: 'Must be less than 15 characters.',
-          value: 15,
-        },
-        {
-          name: ValidatorName.minlength,
-          message: 'Must not be less than 8 characters.',
-          value: 8,
-        },
-        {
-          name: ValidatorName.regex,
-          message: '1 or more numbers.',
-          value: '^.*[0-9].*$',
-        },
-        {
-          name: ValidatorName.regex,
-          message: '1 or more lower case letters.',
-          value: '^.*[a-z].*$',
-        },
-        {
-          name: ValidatorName.regex,
-          message: '1 or more upper case letters.',
-          value: '^.*[A-Z].*$',
-        },
-      ],
-    },
-  ];
-
+  constructor(private httpClient: HttpClient) {}
   registrationRequestExample: RegistrationRequest = {
     first_name: 'John',
     middle_name: '',
@@ -150,10 +18,10 @@ export class RegistrationService {
     password: 'SecretPassword',
   };
 
-  getRegistrationFormFields(): RegistrationField[] {
-    return this.registrationFormFieldsResponseExample;
+  getRegistrationFormFields(): Observable<RegistrationField[]> {
+    return this.httpClient.get<RegistrationField[]>('/registrationFields');
   }
-  submitRegistrationForm(req = this.registrationRequestExample) {
-    console.log(req);
+  register(requestBody: RegistrationRequest): Observable<any> {
+    return this.httpClient.post('/register', requestBody);
   }
 }

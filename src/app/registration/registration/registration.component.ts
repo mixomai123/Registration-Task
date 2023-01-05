@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../registration.service';
-import { RegistrationField } from '../registration.model';
+import { RegistrationField, RegistrationRequest } from '../registration.model';
 import {
   FormBuilder,
   FormGroup,
@@ -26,7 +26,9 @@ export class RegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.initFields(this.registrationService.getRegistrationFormFields());
+    this.registrationService
+      .getRegistrationFormFields()
+      .subscribe((res) => this.initFields(res));
   }
   initFields(fields: RegistrationField[]) {
     this.formFields = fields;
@@ -47,6 +49,9 @@ export class RegistrationComponent implements OnInit {
     return obj?.[ERROR_MESSAGE_KEY];
   }
   onSubmit() {
-    this.registrationService.submitRegistrationForm(this.form.getRawValue());
+    const req: RegistrationRequest = {
+      ...this.form.getRawValue(),
+    };
+    this.registrationService.register(req).subscribe((r) => console.log(r));
   }
 }
