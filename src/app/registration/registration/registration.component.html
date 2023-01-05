@@ -7,7 +7,17 @@
       <div class="form-control">
         <label
           >{{ field.label }}:
-          <input [type]="field.type" [formControlName]="field.name" />
+          <input [type]="field.type" [formControlName]="field.name" #ref />
+
+          <ng-container *ngIf="field.type === 'password'">
+            <span>Show password</span>
+            <input
+              class="password-toggle"
+              type="checkbox"
+              #checkbox
+              (click)="ref.type = checkbox.checked ? 'text' : 'password'"
+            />
+          </ng-container>
         </label>
         <br />
         <div

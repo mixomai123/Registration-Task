@@ -44,6 +44,10 @@ form {
     &.ng-invalid.ng-touched {
       border: 2px dashed red;
     }
+    &.password-toggle {
+      width: 16px;
+      height: 16px;
+    }
   }
   .alert {
     color: red;
