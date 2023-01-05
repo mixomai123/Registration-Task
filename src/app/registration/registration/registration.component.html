@@ -12,7 +12,7 @@
       class="alert"
     >
       <div *ngIf="form.controls[field.name].hasError">
-        {{ getFirstError(form.controls[field.name].errors) }}
+        {{ getErrorMessage(form.controls[field.name].errors) }}
       </div>
     </div>
   </ng-container>

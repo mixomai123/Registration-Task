@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { RegistrationField, RegistrationRequest } from './registration.model';
+import {
+  RegistrationField,
+  RegistrationRequest,
+  ValidatorName,
+} from './registration.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +18,12 @@ export class RegistrationService {
       required: true,
       validations: [
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: 'Only English characters are allowed.',
           value: '^[a-zA-Z0-9]*$',
         },
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 64 characters.',
           value: 63,
         },
@@ -32,12 +36,12 @@ export class RegistrationService {
       required: false,
       validations: [
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: 'Only English characters are allowed.',
           value: '^[a-zA-Z0-9]*$',
         },
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 64 characters.',
           value: 63,
         },
@@ -50,12 +54,12 @@ export class RegistrationService {
       required: true,
       validations: [
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: 'Only English characters are allowed.',
           value: '^[a-zA-Z0-9]*$',
         },
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 64 characters.',
           value: 63,
         },
@@ -68,12 +72,12 @@ export class RegistrationService {
       required: true,
       validations: [
         {
-          name: 'regex',
-          message: 'Only English characters are allowed.',
+          name: ValidatorName.regex,
+          message: 'Please provide correct email address.',
           value: '^[a-z0-9]+@[a-z0-9]+\\.[a-z]{2,}$',
         },
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 47 characters.',
           value: 46,
         },
@@ -86,17 +90,17 @@ export class RegistrationService {
       required: true,
       validations: [
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: 'Only numbers are allowed.',
           value: '^[0-9]+$',
         },
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 47 characters.',
           value: 10,
         },
         {
-          name: 'minlength',
+          name: ValidatorName.minlength,
           message: 'Must not be less than 4 characters.',
           value: 4,
         },
@@ -109,27 +113,27 @@ export class RegistrationService {
       required: true,
       validations: [
         {
-          name: 'maxlength',
+          name: ValidatorName.maxlength,
           message: 'Must be less than 15 characters.',
           value: 15,
         },
         {
-          name: 'minlength',
+          name: ValidatorName.minlength,
           message: 'Must not be less than 8 characters.',
           value: 8,
         },
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: '1 or more numbers.',
           value: '^.*[0-9].*$',
         },
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: '1 or more lower case letters.',
           value: '^.*[a-z].*$',
         },
         {
-          name: 'regex',
+          name: ValidatorName.regex,
           message: '1 or more upper case letters.',
           value: '^.*[A-Z].*$',
         },
