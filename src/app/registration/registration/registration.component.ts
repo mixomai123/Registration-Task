@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationService } from '../registration.service';
-import { RegistrationField, RegistrationRequest } from '../registration.model';
 import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { RegistrationService } from '../registration.service';
 import {
   customValidatorFn,
   ERROR_MESSAGE_KEY,
 } from '../registration-form-validator';
-import { Router } from '@angular/router';
+import { RegistrationField } from '../../shared/registration-field.model';
+import { RegistrationRequest } from '../../shared/registration-request.model';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',

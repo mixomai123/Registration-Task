@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
-import { FakeBackendInterceptor } from './fake-backend-interceptor.service';
+
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { FakeBackendInterceptor } from './fake-backend.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule],
   providers: [
     HttpClient,
     {

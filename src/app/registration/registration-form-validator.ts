@@ -1,10 +1,12 @@
-import { FieldValidation, ValidatorName } from './registration.model';
 import {
   AbstractControl,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+
+import { ValidatorName } from '../shared/validator-name.model';
+import { FieldValidation } from '../shared/field-validation.model';
 
 export const ERROR_MESSAGE_KEY = 'message';
 

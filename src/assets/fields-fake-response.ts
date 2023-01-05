@@ -1,7 +1,5 @@
-import {
-  RegistrationField,
-  ValidatorName,
-} from '../app/registration/registration.model';
+import { ValidatorName } from '../app/shared/validator-name.model';
+import { RegistrationField } from '../app/shared/registration-field.model';
 
 export const registrationFormFields: RegistrationField[] = [
   {
