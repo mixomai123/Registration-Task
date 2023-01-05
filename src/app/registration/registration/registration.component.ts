@@ -47,8 +47,6 @@ export class RegistrationComponent implements OnInit {
     return obj?.[ERROR_MESSAGE_KEY];
   }
   onSubmit() {
-    if (this.form.valid) {
-      this.registrationService.submitRegistrationForm(this.form.getRawValue());
-    }
+    this.registrationService.submitRegistrationForm(this.form.getRawValue());
   }
 }

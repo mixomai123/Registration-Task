@@ -60,10 +60,14 @@ form {
   padding: 10px;
   cursor: pointer;
   transition: 0.5s;
-  &:hover {
+  &:hover:enabled {
     transform: translateY(-5px);
   }
-  &:active {
+  &:active:enabled {
     transform: translateY(-1px);
+  }
+  &:disabled {
+    background-color: #605f60;
+    cursor: default;
   }
 }
