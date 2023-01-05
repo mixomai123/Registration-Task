@@ -1,0 +1,14 @@
+.card {
+  font-family: "Open Sans", sans-serif;
+  border-radius: 4px;
+  background-color: white;
+  min-height: 300px;
+  p {
+    padding: 15px;
+  }
+  .card-header {
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #f7f7f7;
+  }
+}

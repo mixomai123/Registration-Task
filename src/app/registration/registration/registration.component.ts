@@ -11,6 +11,7 @@ import {
   customValidatorFn,
   ERROR_MESSAGE_KEY,
 } from '../registration-form-validator';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -22,7 +23,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private registrationService: RegistrationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,8 @@ export class RegistrationComponent implements OnInit {
     const req: RegistrationRequest = {
       ...this.form.getRawValue(),
     };
-    this.registrationService.register(req).subscribe((r) => console.log(r));
+    this.registrationService.register(req).subscribe(() => {
+      this.router.navigate(['/welcome']);
+    });
   }
 }
