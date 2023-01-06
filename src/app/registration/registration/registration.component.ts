@@ -12,8 +12,13 @@ import {
   customValidatorFn,
   ERROR_MESSAGE_KEY,
 } from '../registration-form-validator';
-import { RegistrationField } from '../../shared/registration-field.model';
+import {
+  RegistrationField,
+  RegistrationFieldClass,
+} from '../../shared/registration-field.model';
 import { RegistrationRequest } from '../../shared/registration-request.model';
+import { validate } from 'class-validator';
+import { ValidationError } from 'class-validator/types/validation/ValidationError';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -22,7 +27,7 @@ import { RegistrationRequest } from '../../shared/registration-request.model';
 export class RegistrationComponent implements OnInit {
   formFields: RegistrationField[] = [];
   form: FormGroup = this.fb.group({});
-
+  classValidatorErrors: ValidationError[] = [];
   constructor(
     private registrationService: RegistrationService,
     private fb: FormBuilder,
@@ -34,9 +39,15 @@ export class RegistrationComponent implements OnInit {
       .getRegistrationFormFields()
       .subscribe((res) => this.initFields(res));
   }
-  initFields(fields: RegistrationField[]) {
+  async initFields(fields: RegistrationField[]) {
     this.formFields = fields;
+
     for (const field of fields) {
+      //class-validator
+      const fieldsValidatorObject = new RegistrationFieldClass(field);
+      this.classValidatorErrors = await validate(fieldsValidatorObject);
+      if (this.classValidatorErrors?.length) return;
+      //
       const control = this.fb.control(
         '',
         field.required ? Validators.required : null
