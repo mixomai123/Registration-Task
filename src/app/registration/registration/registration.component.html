@@ -2,7 +2,10 @@
   <div class="header">
     <h2>Registration</h2>
   </div>
-  <form [formGroup]="form">
+  <form
+    [formGroup]="form"
+    *ngIf="!classValidatorErrors.length; else invalidRegFields"
+  >
     <ng-container *ngFor="let field of formFields">
       <div class="form-control">
         <label
@@ -43,3 +46,9 @@
     </button>
   </form>
 </div>
+
+<ng-template #invalidRegFields>
+  <ng-container *ngFor="let error of classValidatorErrors">
+    <p>{{ error }}</p>
+  </ng-container>
+</ng-template>
