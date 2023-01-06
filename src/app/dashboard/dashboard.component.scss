@@ -1,11 +1,17 @@
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  overflow: hidden;
   .main-btn,
   .main-btn :link,
   .main-btn :visited {
     padding: 10px;
     background: white;
-    color: rgb(114, 0, 111);
-    border-radius: 60px;
+    color: rgb(0, 0, 0);
+    border-radius: 16px;
     text-decoration: none;
     transition: all 0.3s;
     display: inline-block;
@@ -19,5 +25,36 @@ header {
     &:active {
       transform: translateY(-1px);
     }
+  }
+}
+.main-heading {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 32px;
+  font-family: sans-serif;
+  animation: toLeft 2s forwards;
+}
+
+@keyframes toLeft {
+  0% {
+    transform: translateX(-150px);
+    color: rgb(168, 224, 243);
+    filter: blur(5px);
+    text-shadow: #fc0 45px 5px 10px;
+  }
+
+  80% {
+    transform: translateX(30px);
+    color: rgb(135, 182, 207);
+    filter: blur(1px);
+  }
+
+  100% {
+    transform: translateX(0px);
+    color: rgb(175, 179, 221);
+    filter: blur(0px);
+    text-shadow: #fc0 2px 0 10px;
   }
 }
